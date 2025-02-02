@@ -34,9 +34,9 @@ const TabsLayout = () => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "#9d174d",
+        tabBarInactiveTintColor: "black",
         tabBarStyle: {
-          backgroundColor: "#020617",
+          backgroundColor: "gray",
           height: 60,
           paddingBottom: 10,
           paddingTop: 10,
@@ -68,22 +68,7 @@ const TabsLayout = () => {
           ),
         }}
       />
-      <Tabs.Screen
-        name="(habits)"
-        options={{
-          title: "Habits",
 
-          headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.habits}
-              color={color}
-              name="Habits"
-              focused={focused}
-            />
-          ),
-        }}
-      />
       <Tabs.Screen
         name="more"
         options={{
