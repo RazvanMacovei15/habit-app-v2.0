@@ -1,6 +1,7 @@
 import { Tabs } from "expo-router";
 import { View, Image, Text } from "react-native";
 import { icons } from "../../constants";
+import TabBar from "../../components/TabBar";
 
 interface TabIconProps {
   color: string;
@@ -30,42 +31,12 @@ const TabIcon = ({ icon, color, name, focused }: TabIconProps) => {
 
 const TabsLayout = () => {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "black",
-        tabBarStyle: {
-          backgroundColor: "gray",
-          height: 60,
-          paddingBottom: 10,
-          paddingTop: 10,
-          borderTopEndRadius: 0,
-          borderTopStartRadius: 0,
-        },
-        headerTitleStyle: {
-          fontFamily: "Poppins-Bold",
-          color: "white",
-        },
-      }}
-    >
+    <Tabs tabBar={(props) => <TabBar {...props} />}>
+      <Tabs.Screen name="dashboard" options={{ title: "Dashboard" }} />
       <Tabs.Screen
-        name="dashboard"
+        name="(habits)"
         options={{
-          title: "Dashboard",
-          headerShown: false,
-          headerTitleStyle: {
-            fontFamily: "Poppins-Light",
-            color: "white",
-          },
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.home_icon}
-              color={color}
-              name="Dashboard"
-              focused={focused}
-            />
-          ),
+          title: "Habits",
         }}
       />
 
@@ -73,15 +44,6 @@ const TabsLayout = () => {
         name="more"
         options={{
           title: "More",
-          headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.more}
-              color={color}
-              name="More"
-              focused={focused}
-            />
-          ),
         }}
       />
     </Tabs>

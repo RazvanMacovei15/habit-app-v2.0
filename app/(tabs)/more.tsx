@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const More = () => {
   return (
     <SafeAreaView>
-      <View>
+      <View className="h-full items-center justify-center">
         <Text>More</Text>
       </View>
     </SafeAreaView>
