@@ -2,19 +2,22 @@ import { View, Text, Button } from "react-native";
 import React from "react";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 
-const HabitDetails = () => {
+const GoalDetails = () => {
   const { id } = useLocalSearchParams();
   return (
     <>
       <Stack.Screen
-        options={{ headerTitle: `Habit-${id}`, headerShown: false }}
+        options={{ headerTitle: `Goal-${id}`, headerShown: false }}
       />
       <View className="h-full items-center justify-center">
-        <Text>Habit {id} Details</Text>
-        <Button onPress={() => router.back()} title="Go back" />
+        <Text>Goal {id} Details</Text>
+        <Button
+          onPress={() => router.push("/(drawer)/(tabs)/(goals)")}
+          title="Go to goals..."
+        />
       </View>
     </>
   );
 };
 
-export default HabitDetails;
+export default GoalDetails;

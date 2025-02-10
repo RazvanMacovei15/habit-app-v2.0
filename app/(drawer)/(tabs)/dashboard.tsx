@@ -8,7 +8,6 @@ const Dashboard = () => {
   return (
     <View className="h-full items-center justify-center">
       <Text>Dashboard</Text>
-      <Button onPress={() => router.back()} title="Go back" />
     </View>
   );
 };

@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 
-const HabitsLayout = () => {
+const GoalsLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
@@ -11,4 +11,4 @@ const HabitsLayout = () => {
   );
 };
 
-export default HabitsLayout;
+export default GoalsLayout;

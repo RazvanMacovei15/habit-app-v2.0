@@ -2,48 +2,54 @@ import { Tabs } from "expo-router";
 import { View, Image, Text } from "react-native";
 import { icons } from "../../../constants";
 import TabBar from "../../../components/TabBar";
-
-interface TabIconProps {
-  color: string;
-  name: string;
-  focused: boolean;
-  icon: any;
-}
-
-const TabIcon = ({ icon, color, name, focused }: TabIconProps) => {
-  return (
-    <View className="items-center justify-center gap-1 w-20">
-      <Image
-        source={icon}
-        resizeMode="contain"
-        tintColor={color}
-        className="w-8 h-8"
-      />
-      <Text
-        className={`${focused ? "font-psemibold" : "font-pregular"} text-xs`}
-        style={{ color: color, fontFamily: "Poppins-Light" }}
-      >
-        {name}
-      </Text>
-    </View>
-  );
-};
+import { DrawerToggleButton } from "@react-navigation/drawer";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Feather from "@expo/vector-icons/Feather";
 
 const TabsLayout = () => {
   return (
-    <Tabs tabBar={(props) => <TabBar {...props} />}>
-      <Tabs.Screen name="dashboard" options={{ title: "Dashboard" }} />
+    <Tabs
+      tabBar={(props) => <TabBar {...props} />}
+      screenOptions={{
+        headerLeft: () => <DrawerToggleButton tintColor="black" />,
+      }}
+    >
+      <Tabs.Screen
+        name="dashboard"
+        options={{
+          title: "Dashboard",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="dashboard" size={size} color={color} />
+          ),
+        }}
+      />
       <Tabs.Screen
         name="(habits)"
         options={{
           title: "Habits",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="dumbbell" size={size} color={color} />
+          ),
         }}
       />
-
+      <Tabs.Screen
+        name="(goals)"
+        options={{
+          title: "Goals",
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="linechart" size={size} color={color} />
+          ),
+        }}
+      />
       <Tabs.Screen
         name="more"
         options={{
           title: "More",
+          tabBarIcon: ({ color, size }) => (
+            <Feather name="more-vertical" size={size} color={color} />
+          ),
         }}
       />
     </Tabs>
