@@ -7,13 +7,14 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
+import CustomTabsHeader from "../../../components/CustomTabsHeader";
 
 const TabsLayout = () => {
   return (
     <Tabs
       tabBar={(props) => <TabBar {...props} />}
       screenOptions={{
-        headerLeft: () => <DrawerToggleButton tintColor="black" />,
+        header: (props) => <CustomTabsHeader {...props} />,
       }}
     >
       <Tabs.Screen

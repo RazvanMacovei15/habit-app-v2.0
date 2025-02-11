@@ -7,6 +7,8 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
+import { useCallback } from "react";
+import { router } from "expo-router";
 
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const { colors } = useTheme();
@@ -26,7 +28,6 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
         const IconComponent = options.tabBarIcon;
         const isFocused = state.index === index;
 
-        // 🌟 Reanimated Shared Value
         const scale = useSharedValue(1);
 
         const animatedStyle = useAnimatedStyle(() => {
@@ -43,22 +44,28 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           scale.value = withSpring(1, { damping: 8 }); // 🔄 Back to Normal
         };
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: "tabPress",
-            target: route.key,
-            canPreventDefault: true,
-          });
+        // const onPress = () => {
+        //   const event = navigation.emit({
+        //     type: "tabPress",
+        //     target: route.key,
+        //     canPreventDefault: true,
+        //   });
 
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(route.name, route.params);
-          }
-        };
+        //   if (!isFocused && !event.defaultPrevented) {
+        //     navigation.navigate(route.name, route.params);
+        //   }
+        // };
+
+        // ✅ Prevent Double Navigation with `useCallback`
+        const onPress = useCallback(() => {
+          if (isFocused) return; // 🔥 Avoid navigating if already focused
+
+          router.push(route.name); // ✅ Use `router.push()` instead of `navigation.navigate()`
+        }, [isFocused, route.name]);
 
         return (
           <PlatformPressable
             key={route.name}
-            href={buildHref(route.name, route.params)}
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
             testID={options.tabBarButtonTestID}

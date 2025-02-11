@@ -2,37 +2,43 @@ import {
   DrawerContentScrollView,
   DrawerItem,
   DrawerContentComponentProps,
+  createDrawerNavigator,
 } from "@react-navigation/drawer";
-import { Drawer } from "expo-router/drawer";
 import React, { useEffect } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import { router, usePathname } from "expo-router";
+import { router, usePathname, useSegments } from "expo-router";
 import { View, Text, Dimensions, Platform, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 import type { DrawerNavigationProp } from "@react-navigation/drawer";
+import UserProfile from "./profile";
+import Settings from "./settings";
+import CustomHeader from "@/components/CustomHeader";
+import { Drawer } from "expo-router/drawer";
 
 // Define the props type for CustomDrawerContent explicitly
 function CustomDrawerContent(props: DrawerContentComponentProps) {
+  const segments = useSegments();
   const pathname = usePathname();
 
   useEffect(() => {
-    console.log("Current path is: ", pathname);
-  }, [pathname]);
+    console.log("Current full path: ", `/${segments.join("/")}`);
+  }, [segments]);
+
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItem
-        label={"Dashboard"}
+        label="Dashboard"
         onPress={() => router.push("/(drawer)/(tabs)/dashboard")}
         pressColor="transparent"
       />
       <DrawerItem
-        label={"Profile"}
+        label="Profile"
         onPress={() => router.push("/profile")}
         pressColor="transparent"
       />
       <DrawerItem
-        label={"Settings"}
+        label="Settings"
         onPress={() => router.push("/settings")}
         pressColor="transparent"
       />
@@ -42,20 +48,13 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
 
 function DrawerLayout() {
   const SCREEN_WIDTH = Dimensions.get("window").width;
-  const SCREEN_HEIGHT = Dimensions.get("window").height;
-  const navigation = useNavigation<DrawerNavigationProp<any>>();
 
   return (
     <Drawer
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
-        headerStyle: {
-          height:
-            Platform.OS === "android"
-              ? SCREEN_HEIGHT * 0.1
-              : SCREEN_HEIGHT * 0.1,
-        },
+        header: (props) => <CustomHeader {...props} />,
         drawerStyle: {
           width: SCREEN_WIDTH * 0.7,
         },
@@ -64,12 +63,14 @@ function DrawerLayout() {
       <Drawer.Screen
         name="profile"
         options={{
+          title: "Profile",
           headerShown: true,
-          headerTitleAlign: "center",
-          headerTitle: () => <Text className="">Profile</Text>,
         }}
       />
-      <Drawer.Screen name="settings" options={{ headerShown: true }} />
+      <Drawer.Screen
+        name="settings"
+        options={{ title: "Settings", headerShown: true }}
+      />
     </Drawer>
   );
 }
