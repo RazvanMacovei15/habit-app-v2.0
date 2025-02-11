@@ -12,7 +12,6 @@ import { router } from "expo-router";
 
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const { colors } = useTheme();
-  const { buildHref } = useLinkBuilder();
 
   return (
     <View className="absolute bottom-7 flex flex-row items-center justify-between bg-white py-2 mx-6 rounded-3xl">
@@ -44,23 +43,9 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           scale.value = withSpring(1, { damping: 8 }); // 🔄 Back to Normal
         };
 
-        // const onPress = () => {
-        //   const event = navigation.emit({
-        //     type: "tabPress",
-        //     target: route.key,
-        //     canPreventDefault: true,
-        //   });
-
-        //   if (!isFocused && !event.defaultPrevented) {
-        //     navigation.navigate(route.name, route.params);
-        //   }
-        // };
-
-        // ✅ Prevent Double Navigation with `useCallback`
         const onPress = useCallback(() => {
-          if (isFocused) return; // 🔥 Avoid navigating if already focused
-
-          router.push(route.name); // ✅ Use `router.push()` instead of `navigation.navigate()`
+          if (isFocused) return;
+          router.push(route.name);
         }, [isFocused, route.name]);
 
         return (
@@ -90,7 +75,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
                 style={{
                   color: isFocused ? colors.primary : colors.text,
                   fontFamily: "Poppins-Light",
-                  fontSize: 12,
+                  fontSize: 14,
                 }}
               >
                 {label}

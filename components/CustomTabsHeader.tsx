@@ -19,7 +19,11 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 import { useDrawerStatus } from "@react-navigation/drawer";
 
-const CustomHeader = ({ navigation, route, options }: BottomTabHeaderProps) => {
+const CustomTabHeader = ({
+  navigation,
+  route,
+  options,
+}: BottomTabHeaderProps) => {
   const title = getHeaderTitle(options, route.name);
   const drawerStatus = useDrawerStatus();
   return (
@@ -73,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomHeader;
+export default CustomTabHeader;

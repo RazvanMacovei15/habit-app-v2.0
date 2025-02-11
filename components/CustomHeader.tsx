@@ -15,6 +15,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 import { useDrawerStatus } from "@react-navigation/drawer";
+import { router } from "expo-router";
 
 const CustomHeader = ({ navigation, route, options }: DrawerHeaderProps) => {
   const title = getHeaderTitle(options, route.name);
@@ -39,7 +40,7 @@ const CustomHeader = ({ navigation, route, options }: DrawerHeaderProps) => {
 
         <Text className="text-xl">{title}</Text>
 
-        <Pressable className="px-5 py-2" onPress={() => navigation.goBack()}>
+        <Pressable className="px-5 py-2" onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={20} color="black" />
         </Pressable>
       </View>
