@@ -1,4 +1,4 @@
-import { View, Image } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 import { useLinkBuilder, useTheme } from "@react-navigation/native";
 import { Text, PlatformPressable } from "@react-navigation/elements";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
@@ -14,7 +14,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   const { colors } = useTheme();
 
   return (
-    <View className="absolute bottom-7 flex flex-row items-center justify-between bg-white py-2 mx-6 rounded-3xl">
+    <View style={styles.tabBar} className="absolute bottom-5 flex flex-row items-center justify-between bg-white py-2 mx-4 rounded-3xl">
       {state.routes.map((route: any, index: any) => {
         const { options } = descriptors[route.key];
         const label =
@@ -75,7 +75,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
                 style={{
                   color: isFocused ? colors.primary : colors.text,
                   fontFamily: "Poppins-Light",
-                  fontSize: 14,
+                  fontSize: 12,
                 }}
               >
                 {label}
@@ -87,5 +87,18 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+    tabBar: {
+    // ✅ iOS Shadow
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+
+    // ✅ Android Shadow
+    elevation: 2,
+  },
+});
 
 export default TabBar;
