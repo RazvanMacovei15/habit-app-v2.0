@@ -55,6 +55,7 @@ function DrawerLayout() {
       screenOptions={{
         headerShown: false,
         header: (props) => <CustomHeader {...props} />,
+        drawerType: "front",
         drawerStyle: {
           width: SCREEN_WIDTH * 0.7,
         },

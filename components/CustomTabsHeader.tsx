@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ViewStyle,
   Dimensions,
+  Platform,
 } from "react-native";
 import { getHeaderTitle } from "@react-navigation/elements";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
@@ -27,53 +28,50 @@ const CustomTabHeader = ({
   const title = getHeaderTitle(options, route.name);
   const drawerStatus = useDrawerStatus();
   return (
-    <SafeAreaView className="drop-shadow-lg">
-      <View
-        style={styles.header}
-        className="flex flex-row justify-between items-center bg-white drop-shadow-xl"
+    <SafeAreaView
+      edges={["top"]}
+      className="flex flex-row justify-between items-center bg-white"
+      style={Platform.OS === "ios" ? styles.iosHeader : styles.header}
+    >
+      <Pressable
+        className="px-5 py-2"
+        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       >
-        <Pressable
-          className="px-5 py-2"
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        >
-          <AntDesign
-            name={drawerStatus === "open" ? "menufold" : "menuunfold"} // ✅ Change icon based on drawer state
-            size={20}
-            color="black"
-          />
-        </Pressable>
+        <AntDesign
+          name={drawerStatus === "open" ? "menufold" : "menuunfold"} // ✅ Change icon based on drawer state
+          size={20}
+          color="black"
+        />
+      </Pressable>
 
-        <Text className="text-xl">{title}</Text>
+      <Text
+        className="text-xl"
+        onPress={() => {
+          console.log(SCREEN_HEIGHT);
+        }}
+      >
+        {title}
+      </Text>
 
-        <Pressable className="px-5 py-2" onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={20} color="black" />
-        </Pressable>
-      </View>
+      <Pressable className="px-5 py-2" onPress={() => navigation.goBack()}>
+        <Ionicons name="arrow-back" size={20} color="black" />
+      </Pressable>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    backgroundColor: "#fff",
+  something: {
+    height: SCREEN_HEIGHT * 0.05,
   },
-  header: {
-    // ✅ iOS Shadow
+  iosHeader: {
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
-
-    // ✅ Android Shadow
+  },
+  header: {
     elevation: 2,
-  },
-  button: {
-    padding: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
   },
 });
 
