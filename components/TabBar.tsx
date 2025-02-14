@@ -92,8 +92,9 @@ const TabItem = ({ route, descriptors, isFocused }: any) => {
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       style={styles.tabItem}
+      className="px-3"
     >
-      <Animated.View style={[animatedStyle, styles.tabContent]}>
+      <Animated.View  style={[animatedStyle, styles.tabContent]}>
         {IconComponent && (
           <IconComponent
             color={isFocused ? "#6AB0E3" : "#191d31"}
@@ -102,14 +103,22 @@ const TabItem = ({ route, descriptors, isFocused }: any) => {
           />
         )}
         <Text
+        
           style={{
             color: isFocused ? "#6AB0E3" : "#191d31",
             fontSize: 12,
             fontWeight: "600",
+            
           }}
         >
           {label}
         </Text>
+        
+        {isFocused && (
+          <View
+          className="flex w-1/2 h-[2] mt-2 bg-primary-300"
+          />
+        )}
       </Animated.View>
     </PlatformPressable>
   );
@@ -122,18 +131,19 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: SCREEN_HEIGHT * 0.08,
+    height: SCREEN_HEIGHT * 0.1,
     backgroundColor: "white",
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     width: "100%",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
-    elevation: 2,
+    elevation: 5,
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
   tabsContainer: {
     flexDirection: "row",
@@ -153,9 +163,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   tabContent: {
+    padding: 2,
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
+    width: "100%",
   },
+  
 });
 
 export default TabBar;
