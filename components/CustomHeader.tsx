@@ -63,14 +63,6 @@ const styles = StyleSheet.create({
     // ✅ Android Shadow
     elevation: 2,
   },
-  button: {
-    padding: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
 });
 
 export default CustomHeader;

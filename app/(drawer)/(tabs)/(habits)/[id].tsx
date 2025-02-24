@@ -4,7 +4,7 @@ import { router, Stack, useLocalSearchParams } from "expo-router";
 import CustomTabHeader from "@/components/CustomTabsHeader";
 
 const HabitDetails = () => {
-  const { id } = useLocalSearchParams();
+  const { id, description } = useLocalSearchParams();
   return (
     <>
       <Stack.Screen
@@ -15,6 +15,7 @@ const HabitDetails = () => {
       />
       <View className="h-full items-center justify-center">
         <Text>Habit - {id} - Details</Text>
+        <Text>{description}</Text>
         <Button onPress={() => router.back()} title="Go back" />
       </View>
     </>
