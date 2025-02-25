@@ -31,7 +31,7 @@ const CustomTabHeader = ({
     <SafeAreaView
       edges={["top"]}
       className="flex flex-row justify-between items-center bg-white"
-      style={Platform.OS === "ios" ? styles.iosHeader : styles.header}
+      // style={Platform.OS === "ios" ? styles.iosHeader : styles.header}
     >
       <Pressable
         className="px-5 py-2"

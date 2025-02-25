@@ -28,8 +28,8 @@ const HabitCard = ({ habit }: HabitCardProps) => {
       className="flex flex-row w-full items-center justify-center p-2"
     >
       <View className="flex flex-row items-center justify-start w-full pl-2">
-        <BouncyCheckbox size={25} disableText/>
-        <Text className="pl-5">{habit.title}</Text>
+        <BouncyCheckbox size={28} disableText fillColor="#6AB0E3"/>
+        <Text className="pl-5 text-lg font-manrope-regular">{habit.title}</Text>
       </View>
     </TouchableOpacity>
   );
