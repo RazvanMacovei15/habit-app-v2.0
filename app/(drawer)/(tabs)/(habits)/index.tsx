@@ -4,7 +4,7 @@ import { Link } from "expo-router";
 import habits from "../../../../constants/data";
 import HabitCard from "@/components/HabitCard";
 import OccurrenceFilter from "@/components/OccurrenceFilter";
-import DayByDayNavigation from "@/components/DayByDayNavigation";
+import DayByDayNavigation from "../../../../components/daily-navigation/DayByDayNavigation";
 import WeekByWeekNavigation from "@/components/WeekByWeekNavigation";
 import MonthByMonthNavigation from "@/components/MonthByMonthNavigation";
 
@@ -15,7 +15,6 @@ const Habits = () => {
 
   const [habitsClone, setHabitsClone] = useState([...habits]);
   const [selectedType, setSelectedType] = useState("daily"); 
-
 
   const addHabit = () => {
     const newHabit = {
@@ -35,8 +34,6 @@ const Habits = () => {
 
   const filteredHabits = habitsClone.filter(habit => habit.occurrence === selectedType);
 
-
-  
   return (
     <View className="h-full items-center justify-end flex w-full bg-gray-200" style={styles.mainview}>
       <OccurrenceFilter setType={setSelectedType} />
