@@ -13,22 +13,12 @@ type DayCardProps = {
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const DayCard = ({ date }: DayCardProps) => {
-  const {
-    getMonth,
-    getDaysInMonth,
-    getDay,
-    getYear,
-    format,
-  } = require("date-fns");
+  const { getDay, format } = require("date-fns");
   const day = getDay(date);
-  const year = getYear(date);
-  const month = getMonth(date);
-  const daysInMonth = getDaysInMonth(date);
-  const firstDay = getDay(new Date(year, getMonth(date), 1));
   const formattedDate = format(date, "MMM dd");
 
   const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const dayOfWeek = WEEKDAYS[day]; // Map 0-6 to Sun-Sat
+  const dayOfWeek = WEEKDAYS[day];
 
   return (
     <View
@@ -43,12 +33,7 @@ const DayCard = ({ date }: DayCardProps) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: (1 / 7) * SCREEN_WIDTH,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
+    width: (1 / 8) * SCREEN_WIDTH,
   },
   isCurrentDay: {
     backgroundColor: "#6AB0E31A",

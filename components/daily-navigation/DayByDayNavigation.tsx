@@ -1,10 +1,22 @@
-import { useEffect, useState } from "react";
-import { View, ScrollView } from "react-native";
-import { getDaysInMonth, getYear, getMonth, addDays, format } from "date-fns";
+import { useEffect, useRef, useState } from "react";
+import { View, ScrollView, Dimensions } from "react-native";
+import {
+  getDaysInMonth,
+  getYear,
+  getMonth,
+  addDays,
+  format,
+  getDate,
+} from "date-fns";
 import DayCard from "../daily-navigation/DayCard";
 
 const DayByDayNavigation = () => {
+  const SCREEN_WIDTH = Dimensions.get("window").width;
+
   const today = new Date();
+  const todayIndex = getDate(today) - 1;
+  const scrollViewRef = useRef<ScrollView>(null);
+
   const [days, setDays] = useState<Date[]>([]);
 
   // Generate all days of the current month
@@ -19,12 +31,28 @@ const DayByDayNavigation = () => {
     setDays(monthDays);
   }, []);
 
+  useEffect(() => {
+    if (days.length > 0 && scrollViewRef.current) {
+      if (todayIndex !== -1) {
+        const itemWidth = (SCREEN_WIDTH * 1) / 7 + 8;
+        console.log(itemWidth);
+        const scrollToX = 18 * itemWidth - itemWidth * 5;
+
+        scrollViewRef.current.scrollTo({
+          x: scrollToX > 0 ? scrollToX : 0,
+          animated: false,
+        });
+      }
+    }
+  }, [days]);
+
   return (
     <View className="w-full my-2">
       <ScrollView
+        ref={scrollViewRef}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 8 }} // Keeps padding even
+        contentContainerStyle={{ paddingHorizontal: 8 }}
       >
         <View className="flex flex-row gap-2">
           {days.map((date, index) => (
