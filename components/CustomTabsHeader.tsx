@@ -19,6 +19,7 @@ import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 import { useDrawerStatus } from "@react-navigation/drawer";
+import { useFilterMonth } from "./contexts/FilterMonthContext";
 
 const CustomTabHeader = ({
   navigation,
@@ -27,6 +28,8 @@ const CustomTabHeader = ({
 }: BottomTabHeaderProps) => {
   const title = getHeaderTitle(options, route.name);
   const drawerStatus = useDrawerStatus();
+  const { setMonth } = useFilterMonth();
+
   return (
     <SafeAreaView
       edges={["top"]}
@@ -38,7 +41,7 @@ const CustomTabHeader = ({
         onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       >
         <AntDesign
-          name={drawerStatus === "open" ? "menufold" : "menuunfold"} // ✅ Change icon based on drawer state
+          name={drawerStatus === "open" ? "menufold" : "menuunfold"}
           size={20}
           color="black"
         />
@@ -53,7 +56,7 @@ const CustomTabHeader = ({
         {title}
       </Text>
 
-      <Pressable className="px-5 py-2" onPress={() => navigation.goBack()}>
+      <Pressable className="px-5 py-2" onPress={() => setMonth(7)}>
         <Ionicons name="arrow-back" size={20} color="black" />
       </Pressable>
     </SafeAreaView>

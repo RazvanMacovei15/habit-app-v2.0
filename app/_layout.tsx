@@ -4,6 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { FilterMonthProvider } from "@/components/contexts/FilterMonthContext";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -29,7 +30,9 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <Stack screenOptions={{ headerShown: false }} />
+        <FilterMonthProvider>
+          <Stack screenOptions={{ headerShown: false }} />
+        </FilterMonthProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
