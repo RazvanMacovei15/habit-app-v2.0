@@ -1,28 +1,25 @@
-import { createContext, ReactNode, useContext, useState } from "react";
-
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import {
+  startOfDay,
+  isMonday,
+  getMonth,
+  getYear,
+  getISOWeek,
+  set,
+} from "date-fns";
 
 interface FilterMonthContextType {
-  defaultMonth: number;
   month: number;
   setMonth: (month: number) => void;
-  selectedMonth: number;
-  setSelectedMonth: (month: number) => void;
-  selectedYear: number;
-  setSelectedYear: (year: number) => void;
+  year: number;
+  setYear: (year: number) => void;
+  firstMondayOfMonth: number;
 }
 
 const FilterMonthContext = createContext<FilterMonthContextType | undefined>(
@@ -32,19 +29,38 @@ const FilterMonthContext = createContext<FilterMonthContextType | undefined>(
 export const FilterMonthProvider = ({ children }: { children: ReactNode }) => {
   const today = new Date();
 
-  const [month, setMonth] = useState(new Date().getMonth());
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(1);
+  const [selectedYear, setSelectedYear] = useState(2025);
+  const [firstMondayOfMonth, setFirstMondayOfMonth] = useState(1);
+
+  const getFirstMonday = () => {
+    for (let i = 1; i <= 7; i++) {
+      let day = new Date(selectedYear, month, i);
+      day.setHours(12, 0, 0, 0);
+      if (isMonday(day)) {
+        return i;
+      }
+    }
+    throw new Error("No Monday found in the first week of the month");
+  };
+
+  useEffect(() => {
+    const loadAssets = async () => {
+      setMonth(getMonth(today));
+      setSelectedYear(getYear(today));
+      setFirstMondayOfMonth(getFirstMonday());
+    };
+    loadAssets();
+  }, []);
+
   return (
     <FilterMonthContext.Provider
       value={{
-        defaultMonth: month,
         month: month,
         setMonth: setMonth,
-        selectedMonth,
-        setSelectedMonth,
-        selectedYear,
-        setSelectedYear,
+        year: selectedYear,
+        setYear: setSelectedYear,
+        firstMondayOfMonth,
       }}
     >
       {children}

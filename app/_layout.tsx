@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { FilterMonthProvider } from "@/components/contexts/FilterMonthContext";
+import { PopupProvider } from "@/components/contexts/PopUpContext";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -30,9 +31,13 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <FilterMonthProvider>
-          <Stack screenOptions={{ headerShown: false }} />
-        </FilterMonthProvider>
+        <PopupProvider>
+          <FilterMonthProvider>
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+            </Stack>
+          </FilterMonthProvider>
+        </PopupProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );

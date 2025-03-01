@@ -15,11 +15,13 @@ import { DrawerHeaderProps } from "@react-navigation/drawer";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
 import { useDrawerStatus } from "@react-navigation/drawer";
 import { useFilterMonth } from "./contexts/FilterMonthContext";
+import { usePopup } from "./contexts/PopUpContext";
 
 const CustomTabHeader = ({
   navigation,
@@ -30,14 +32,16 @@ const CustomTabHeader = ({
   const drawerStatus = useDrawerStatus();
   const { setMonth } = useFilterMonth();
 
+  const { toggleMonthYear } = usePopup();
+
   return (
     <SafeAreaView
       edges={["top"]}
-      className="flex flex-row justify-between items-center bg-white"
+      className="flex flex-row justify-between items-center bg-white px-2"
       // style={Platform.OS === "ios" ? styles.iosHeader : styles.header}
     >
       <Pressable
-        className="px-5 py-2"
+        className="py-2 w-1/3"
         onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
       >
         <AntDesign
@@ -48,17 +52,24 @@ const CustomTabHeader = ({
       </Pressable>
 
       <Text
-        className="text-xl"
+        className=" text-xl grow items-center justify-center text-center "
         onPress={() => {
           console.log(SCREEN_HEIGHT);
         }}
       >
         {title}
       </Text>
-
-      <Pressable className="px-5 py-2" onPress={() => setMonth(7)}>
-        <Ionicons name="arrow-back" size={20} color="black" />
-      </Pressable>
+      <View className="py-2 w-1/3 items-end justify-end">
+        {/* <DropdownFilter /> */}
+        <MaterialCommunityIcons
+          name="format-list-checkbox"
+          size={24}
+          color="black"
+          onPress={() => {
+            toggleMonthYear();
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 };
