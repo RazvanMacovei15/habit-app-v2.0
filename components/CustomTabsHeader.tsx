@@ -7,6 +7,7 @@ import {
   ViewStyle,
   Dimensions,
   Platform,
+  TouchableOpacity,
 } from "react-native";
 import { getHeaderTitle } from "@react-navigation/elements";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
@@ -22,6 +23,8 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 import { useDrawerStatus } from "@react-navigation/drawer";
 import { useFilterMonth } from "./contexts/FilterMonthContext";
 import { usePopup } from "./contexts/PopUpContext";
+import DropdownFilter from "./DropdownFilter";
+import MONTHS_WITH_DATA from "@/constants/months-data";
 
 const CustomTabHeader = ({
   navigation,
@@ -30,14 +33,14 @@ const CustomTabHeader = ({
 }: BottomTabHeaderProps) => {
   const title = getHeaderTitle(options, route.name);
   const drawerStatus = useDrawerStatus();
-  const { setMonth } = useFilterMonth();
+  const { month, setMonth } = useFilterMonth();
 
   const { toggleMonthYear } = usePopup();
 
   return (
     <SafeAreaView
       edges={["top"]}
-      className="flex flex-row justify-between items-center bg-white px-2"
+      className="flex flex-row justify-between items-center bg-white px-5"
       // style={Platform.OS === "ios" ? styles.iosHeader : styles.header}
     >
       <Pressable
@@ -59,17 +62,23 @@ const CustomTabHeader = ({
       >
         {title}
       </Text>
-      <View className="py-2 w-1/3 items-end justify-end">
-        {/* <DropdownFilter /> */}
-        <MaterialCommunityIcons
-          name="format-list-checkbox"
-          size={24}
-          color="black"
+      {route.name === "(habits)" && (
+        <TouchableOpacity
+          className="py-2 w-1/3 items-center justify-end flex flex-row "
           onPress={() => {
             toggleMonthYear();
           }}
-        />
-      </View>
+        >
+          <Text className="align-middle text-center pr-2 color-primary-300 ">
+            {MONTHS_WITH_DATA[month].name}
+          </Text>
+          <MaterialCommunityIcons
+            name="format-list-checkbox"
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };

@@ -55,8 +55,7 @@ const DayByDayNavigation = () => {
   useEffect(() => {
     if (days.length > 0 && scrollViewRef.current) {
       if (todayIndex !== -1) {
-        const scrollToX = getXPositionForMonday(testingDay);
-        console.log(scrollToX);
+        const scrollToX = getXPositionForMonday(today);
         scrollViewRef.current.scrollTo({
           x: scrollToX > 0 ? scrollToX : 0,
           animated: false,

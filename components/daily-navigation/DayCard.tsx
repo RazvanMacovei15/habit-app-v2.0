@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
 } from "react-native";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 type DayCardProps = {
   date: Date;
@@ -13,17 +14,23 @@ type DayCardProps = {
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const DayCard = ({ date }: DayCardProps) => {
-  const { getDay, format } = require("date-fns");
+  const today = new Date();
+  const { getDay, format, isSameDay } = require("date-fns");
   const day = getDay(date);
   const formattedDate = format(date, "dd");
 
   const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const dayOfWeek = WEEKDAYS[day];
 
+  const isCurrentDay = isSameDay(date, today);
+
   return (
     <View
-      className="bg-white py-3 rounded-xl grow items-center justify-center"
-      style={styles.card}
+      className="py-3 rounded-xl grow items-center justify-center"
+      style={[
+        styles.card,
+        isCurrentDay ? styles.isCurrentDay : styles.isNotCurrentDay,
+      ]}
     >
       <Text>{dayOfWeek}</Text>
       <Text>{formattedDate}</Text>
@@ -36,7 +43,7 @@ const styles = StyleSheet.create({
     width: (1 / 7) * (SCREEN_WIDTH - 16 - 6 * 8),
   },
   isCurrentDay: {
-    backgroundColor: "#6AB0E31A",
+    backgroundColor: "#6AB0E3",
     color: "white",
   },
   isNotCurrentDay: {

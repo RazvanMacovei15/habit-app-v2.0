@@ -9,16 +9,16 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { Link } from "expo-router";
-import habits from "../../../../constants/data";
+import habits from "../../../../constants/habits-data";
 import HabitCard from "@/components/HabitCard";
 import OccurrenceFilter from "@/components/OccurrenceFilter";
 import DayByDayNavigation from "../../../../components/daily-navigation/DayByDayNavigation";
 import WeekByWeekNavigation from "@/components/WeekByWeekNavigation";
 import MonthByMonthNavigation from "@/components/MonthByMonthNavigation";
 import { usePopup } from "@/components/contexts/PopUpContext";
-import MonthPicker from "react-native-month-year-picker";
 import { useFilterMonth } from "@/components/contexts/FilterMonthContext";
-import MonthAndYearPicker from "@/components/modals/MonthAndYearPicker";
+import PickerModal from "@/components/modals/PickerModal";
+import MonthPicker from "@/components/modals/MonthPicker";
 
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 
@@ -26,7 +26,7 @@ const Habits = () => {
   const [habitsClone, setHabitsClone] = useState([...habits]);
   const [selectedType, setSelectedType] = useState("daily");
 
-  const { isMonthYearOpen } = usePopup();
+  const { isMonthYearOpen, toggleMonthYear } = usePopup();
 
   const addHabit = () => {
     const newHabit = {
@@ -88,7 +88,11 @@ const Habits = () => {
           +
         </Text>
       </TouchableOpacity>
-      {isMonthYearOpen && <MonthAndYearPicker />}
+      {isMonthYearOpen && (
+        <PickerModal isVisible={isMonthYearOpen} onClose={toggleMonthYear}>
+          <MonthPicker onClose={toggleMonthYear} />
+        </PickerModal>
+      )}
     </View>
   );
 };
