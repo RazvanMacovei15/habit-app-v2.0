@@ -21,8 +21,8 @@ const PickerModal = ({ isVisible, children, onClose }: Props) => {
           <Text className="text-white text-xl font-manrope-bold">
             Pick a month
           </Text>
-          <Pressable onPress={onClose}>
-            <MaterialIcons name="close" color="#fff" size={22} />
+          <Pressable onPress={onClose} className="">
+            <MaterialIcons name="close" color="#fff" size={28} />
           </Pressable>
         </View>
         {children}
