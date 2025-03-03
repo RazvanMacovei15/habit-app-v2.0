@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import { getHeaderTitle } from "@react-navigation/elements";
-import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { DrawerActions, NavigationContainer, useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { DrawerHeaderProps } from "@react-navigation/drawer";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -16,6 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 import { useDrawerStatus } from "@react-navigation/drawer";
 import { router } from "expo-router";
+
 
 const CustomHeader = ({ navigation, route, options }: DrawerHeaderProps) => {
   const title = getHeaderTitle(options, route.name);
@@ -29,7 +30,7 @@ const CustomHeader = ({ navigation, route, options }: DrawerHeaderProps) => {
       >
         <Pressable
           className="px-5 py-2"
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          onPress={() => navigation.openDrawer()}
         >
           <AntDesign
             name={drawerStatus === "open" ? "menufold" : "menuunfold"} // ✅ Change icon based on drawer state
@@ -54,13 +55,10 @@ const styles = StyleSheet.create({
   },
   header: {
     height: SCREEN_HEIGHT * 0.05,
-    // ✅ iOS Shadow
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 1,
-
-    // ✅ Android Shadow
     elevation: 2,
   },
 });

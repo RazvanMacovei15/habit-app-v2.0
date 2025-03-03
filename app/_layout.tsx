@@ -34,7 +34,6 @@ export default function RootLayout() {
         <PopupProvider>
           <FilterMonthProvider>
             <Stack screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="modal" options={{ presentation: "modal" }} />
             </Stack>
           </FilterMonthProvider>
         </PopupProvider>

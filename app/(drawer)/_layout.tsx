@@ -4,10 +4,10 @@ import {
   DrawerContentComponentProps,
   createDrawerNavigator,
 } from "@react-navigation/drawer";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { router, usePathname, useSegments } from "expo-router";
-import { View, Text, Dimensions, Platform, Pressable } from "react-native";
+import { View, Text, Dimensions, Platform, Pressable, Easing } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import type { DrawerNavigationProp } from "@react-navigation/drawer";
@@ -18,14 +18,7 @@ import { Drawer } from "expo-router/drawer";
 
 // Define the props type for CustomDrawerContent explicitly
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const segments = useSegments();
-  const pathname = usePathname();
-
-  useEffect(() => {
-    console.log("Current full path: ", `/${segments.join("/")}`);
-  }, [segments]);
-
-  return (
+    return (
     <DrawerContentScrollView {...props}>
       <DrawerItem
         label="Dashboard"
@@ -47,16 +40,18 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
 }
 
 function DrawerLayout() {
-  const SCREEN_WIDTH = Dimensions.get("window").width;
+  const SCREEN_WIDTH = useRef(Dimensions.get("window").width).current;
 
   return (
     <Drawer
       drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
+        swipeEdgeWidth: SCREEN_WIDTH * 0.7,
         header: (props) => <CustomHeader {...props} />,
         drawerType: "front",
         drawerStyle: {
+          
           width: SCREEN_WIDTH * 0.7,
         },
       }}
